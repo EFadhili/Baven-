@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600;800&family=VT323&display=swap');
+
+body {
+  margin: 0;
+  font-family: "Poppins";
+  background: #f5f5f5;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 30px;
+}
+
+header {
+    padding: 10px 20px;
+    background: #fff;
+    align-items: center;
+}
+
+header h1 {
+    grid-column: 2 / span 2;
+}
+header .left {
+    grid-column: 4 / span 4;
+    justify-self: start;
+}
+header .right {
+    grid-column: 9 / span 3;
+    justify-self: end;
+}
+
+header img {
+    width: 25px;
+    height: 25px;
+    align-content: center;
+    padding: 7px;
+}
+
+header nav a {
+    color: #333;
+    margin-left: 10px;
+    text-decoration: none;
+}
+header .profile-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    right: -120px;
+    background-color: #e9e8e8;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 200px;
+    border-radius: 6px;
+  }
+  .dropdown-item{
+    position: relative;
+    margin-left: 12px;
+  }
+  .dropdown-content a {
+    color: black;
+    padding: 10px;
+    width: 200px;
+    font-size: 15px;
+    display: block;
+  }
+  .dropdown-content a:hover {
+    background-color: #46c6a6;
+    border-radius: 3px;
+  }
+  .profile-dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+main {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 20px;
+}
+main img {
+    grid-column: 2/ span 3;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+}
+
+main .welcome {
+    grid-column: 6 / span 4;
+}
+
+main > h2 {
+    grid-column: span 12;
+    text-align: left;
+    font-size: 1.5em;
+    padding-top: 15px;
+}
+
+main .categories {
+    grid-column: span 3;
+    border-radius: 6px;
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+main .categories img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+main .categories .categories-name {
+    text-align: center; 
+    top: 50%;
+    left: 50%;
+    background: rgba(13, 187, 150, 0.623);    
+}
+
+main .categories:hover {
+    transform: scale(1.1);
+    box-shadow: 3px 3px 15px rgba(0,0,0,0.2);
+}
+
+main .reviews {
+    grid-column: span 3;
+    background: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.05);
+}
+
+main .reviews .rating {
+    font-size: 18px;
+    color: #ffc107;
+    margin-bottom: 10px;
+}
+
+main .reviews .name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+main .reviews .testimonial-text {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #000000;
+}
+main .reviews .stars {
+    color: #ffc107;
+}
+
+
+main .products {
+  grid-column: span 2;
+  border-radius: 6px;
+  box-shadow: 3px 3px 3px rgba(0,0,0,0.05);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+main .products img {
+  width: auto;
+  height: 180px;
+  align-content: center;
+  transition: transform 0.3s ease;
+}
+
+main .products .products-details {
+  text-align: left;
+  padding: 5px;
+  top: 50%;
+  left: 50%;
+  background: rgba(13, 187, 150, 0.623);
+}
+
+main .products:hover {
+  transform: scale(1.1);
+  box-shadow: 3px 3px 15px rgba(0,0,0,0.2);
+}
+
+
+main .card {
+    grid-column: span 4;
+    background: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.05);
+}
+
+button[type="shop-now"] {
+    width: 180px;
+    height: 35px;
+    margin-top: 20px;
+    border: none;
+    background-color: #46c6a6;
+    color: white;
+    font-size: 18px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  button[type="shop-now"]:hover {
+    transform: scale(1.1);
+    color: rgb(0, 0, 0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
