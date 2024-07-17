@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Baven | <%= title %></title>
+  <link rel="stylesheet" href="/details.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
+<body> 
+    <%- include('./partials/header.ejs') %> 
+    <main class="grid">
+        <img src="/uploads/<%= product.productImg %>" alt="<%= product.productName %>">
+        <div class="welcome">
+            <h2><%= product.productName %></h2>
+            <p>
+                <%= product.description %>
+            </p>
+            <p>KSH <%= product.unitPrice %></p>
+            <form action="/cart/add" method="POST" style="display:inline;">
+              <input type="hidden" name="productID" value="<%= product.id %>">
+              <input type="hidden" name="quantity" value="1">
+              <button type="shop-now"><i class="fas fa-shopping-cart"></i>Add to Cart</button>
+            </form>
+            <form action="/favorite/add" method="POST" style="display:inline;">
+              <input type="hidden" name="productID" value="<%= product.id %>">
+              <button type="shop-now"><i class="fas fa-heart"></i> Add to Favorite</button>
+            </form>
+        </div>
+
+        <h2>Customer Reviews</h2>           
+        <div class="reviews">
+            <div class="rating">★★★★☆</div>
+            <p class="name">Alice M.</p>
+            <p class="testimonial-text">"The acrylic paints I bought from here are fantastic! The colors are vibrant and blend beautifully. I'm very happy with my purchase."</p>
+        </div>       
+        <div class="reviews">
+            <div class="rating">★★★★☆</div>
+            <p class="name">David S.</p>
+            <p class="testimonial-text">"Great selection of oil paints. The quality is top-notch, though I wish they had more color options in the larger tubes."</p>
+        </div>
+        <div class="reviews">
+            <div class="rating">★★★★★</div>
+            <p class="name">Emma W.</p>
+            <p class="testimonial-text">"I love the watercolor paints from this shop. They are so pigmented and easy to work with. Will definitely be ordering more."</p>
+        </div>       
+        <div class="reviews">
+            <div class="rating">★★★★★</div>
+            <p class="name">Michael R.</p>
+            <p class="testimonial-text">"I've tried many brands of gouache, but the ones from here are my favorite. They provide excellent coverage and dry to a perfect matte finish."</p>
+        </div>
+
+        <h2>Related Products</h2>
+        <% products.forEach(relatedProduct => { %>
+          <div class="products">
+            <a href="/product/<%= relatedProduct.id %>">
+                <img src="/uploads/<%= relatedProduct.productImg %>" alt="<%= relatedProduct.productName %>">
+            </a>
+            <div class="product-details">
+              <div class="products-details"><%= relatedProduct.productName %></div>
+              <div class="products-details">KSH <%= relatedProduct.unitPrice %></div>
+            </div>
+          </div>
+        <% }) %>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', async () => {
+              const productId = new URLSearchParams(window.location.search).get('id');
+              if (!id) {
+                alert('Product ID is missing');
+                return;
+              }
+        
+              try {
+                const response = await fetch(`/api/products/details/${productId}`);
+                if (!response.ok) {
+                  throw new Error('Failed to fetch product details');
+                }
+                const product = await response.json();
+        
+                document.getElementById('product-image').src = `/uploads/${product.productImg}`;
+                document.getElementById('product-name').textContent = product.productName;
+                document.getElementById('product-description').textContent = product.description;
+                document.getElementById('product-price').textContent = `KSH: ${product.unitPrice}`;
+              } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while fetching product details.');
+              }
+            });
+          </script>
+    </main>
+</body>
+</html>

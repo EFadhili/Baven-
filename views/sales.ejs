@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Baven | <%= title %></title>
+  <link rel="stylesheet" href="/dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <%- include('./partials/nav.ejs') %> 
+    <section class="main">
+      <div class="main-top">
+        <h1>Make Sales</h1>
+        <i class="fas fa-user-cog"></i>
+      </div>
+      <section class="product">
+        <div class="product-list">
+          <h1>Make Sales</h1>
+          <form id="sales-form">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product ID</th>
+                  <th>Product name</th>
+                  <th>Category</th>
+                  <th>Unit price (KSH)</th>
+                  <th>Quantity</th>
+                  <th>Total price (KSH)</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="sales-tbody">
+                  <!-- Rows will be added dynamically here -->
+              </tbody>       
+           </table>
+           <button type="button" id="add-row-btn">+</button>
+           <button type="submit" id="checkout-btn">Checkout</button>
+          </form>
+          <div id="total-amount">
+            <h3>Total Amount: KSH <span id="total-price">0</span></h3>
+          </div>
+        </div>    
+      </section>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const salesTbody = document.getElementById('sales-tbody');
+        const addRowBtn = document.getElementById('add-row-btn');
+        const totalPriceSpan = document.getElementById('total-price');
+
+        addRowBtn.addEventListener('click', () => {
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = `
+            <td><input type="text" name="productId" placeholder="Product ID" onchange="fetchProductDetails(this)"></td>
+            <td><input type="text" name="productName" placeholder="Product name" readonly></td>
+            <td><input type="text" name="category" placeholder="Category" readonly></td>
+            <td><input type="number" name="unitPrice" placeholder="Unit price in KSH" readonly></td>
+            <td><input type="number" name="quantity" placeholder="Quantity" min="1" onchange="calculateTotalPrice(this)"></td>
+            <td><input type="number" name="totalPrice" placeholder="Total price in KSH" readonly></td>
+            <td><button type="button" class="delete-btn">Delete</button></td>
+          `;
+          salesTbody.appendChild(newRow);
+
+          newRow.querySelector('.delete-btn').addEventListener('click', () => {
+            newRow.remove();
+            updateTotalAmount();
+          });
+        });
+
+        document.getElementById('sales-form').addEventListener('submit', (event) => {
+          event.preventDefault();
+          const form = document.getElementById('sales-form');
+          const rows = salesTbody.querySelectorAll('tr');
+          const sales = [];
+
+          rows.forEach(row => {
+            const sale = {
+              productId: row.querySelector('input[name="productId"]').value,
+              productName: row.querySelector('input[name="productName"]').value,
+              category: row.querySelector('input[name="category"]').value,
+              unitPrice: row.querySelector('input[name="unitPrice"]').value,
+              quantity: row.querySelector('input[name="quantity"]').value,
+              totalPrice: row.querySelector('input[name="totalPrice"]').value,
+            };
+            sales.push(sale);
+          });
+
+          fetch('/api/sales/checkout', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ sales }),
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.message) {
+              alert(data.message);
+              location.reload();
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred during checkout.');
+          });
+        });
+      });
+
+      function fetchProductDetails(input) {
+        const productId = input.value;
+        fetch(`/api/products/${productId}`)
+          .then(response => response.json())
+          .then(product => {
+            if (product) {
+              const row = input.parentElement.parentElement;
+              row.querySelector('input[name="productName"]').value = product.productName;
+              row.querySelector('input[name="category"]').value = product.category;
+              row.querySelector('input[name="unitPrice"]').value = product.unitPrice;
+              row.querySelector('input[name="quantity"]').max = product.quantity;
+              calculateTotalPrice(row.querySelector('input[name="quantity"]'));
+            } else {
+              alert('Product not found.');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while fetching product details.');
+          });
+      }
+
+      function calculateTotalPrice(input) {
+        const row = input.parentElement.parentElement;
+        const unitPrice = parseFloat(row.querySelector('input[name="unitPrice"]').value);
+        const quantity = parseInt(input.value);
+        const totalPrice = unitPrice * quantity;
+        row.querySelector('input[name="totalPrice"]').value = totalPrice;
+        updateTotalAmount();
+      }
+
+      function updateTotalAmount() {
+        const rows = document.querySelectorAll('#sales-tbody tr');
+        let totalAmount = 0;
+        rows.forEach(row => {
+          const totalPrice = parseFloat(row.querySelector('input[name="totalPrice"]').value) || 0;
+          totalAmount += totalPrice;
+        });
+        document.getElementById('total-price').textContent = totalAmount;
+      }
+    </script>
+  </body>
+</html>

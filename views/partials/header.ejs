@@ -1,0 +1,48 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Baven | <%= title %></title>
+    <link rel="stylesheet" href="/header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header class="grid">
+        <h1><a href="/homepage">Baven</a></h1>
+        <nav class="left">
+            <a href="/homepage">Home</a>
+            <a href="/shop">Shop</a>
+            <a href="/">About</a>
+            <a href="/">Contact</a>            
+        </nav>
+        <nav class="right">
+            <a href="/"><i class="fas fa-search"></i></a>
+            <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
+            <div class="profile-dropdown">
+                <a href="#" id="profile-button"><i class="fas fa-user"></i></a>
+                <div class="dropdown-content" id="profile-dropdown">
+                    <a href="/profile"><i class="fas fa-user"></i><span class="dropdown-item">Profile</span></a>
+                    <a href="/cart"><i class="fas fa-shopping-cart"></i><span class="dropdown-item">Cart</span></a>
+                    <a href="/shop"><i class="fas fa-arrow-right"></i><span class="dropdown-item">Continue Shoping</span></a>
+                    <a href="/favorite"><i class="fas fa-heart"></i><span class="dropdown-item">Favorite</span></a>
+                  <a href="/logout"><i class="fas fa-sign-out-alt"></i><span class="dropdown-item">Log Out</span></a>
+                </div>
+        </nav>
+    </header>  
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const profileButton = document.getElementById('profile-button');
+          const profileDropdown = document.getElementById('profile-dropdown');
+    
+          profileButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
+          });
+    
+          document.addEventListener('click', (event) => {
+            if (!profileButton.contains(event.target) && !profileDropdown.contains(event.target)) {
+              profileDropdown.style.display = 'none';
+            }
+          });
+        });
+    </script>
+</body>

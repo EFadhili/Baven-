@@ -1,0 +1,130 @@
+<span style="font-family: verdana, geneva, sans-serif;"><!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <title>Attendance Dashboard | By Code Info</title>
+      <link rel="stylesheet" href="style.css" />
+      <!-- Font Awesome Cdn Link -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    </head>
+    <body>
+      <div class="container">
+        <nav>
+          <ul>
+            <li><a href="#" class="logo">
+              <img src="./pic/logo.jpg">
+              <span class="nav-item">Admin</span>
+            </a></li>
+            <li><a href="#">
+              <i class="fas fa-menorah"></i>
+              <span class="nav-item">Dashboard</span>
+            </a></li>
+            <li><a href="#">
+              <i class="fas fa-comment"></i>
+              <span class="nav-item">Message</span>
+            </a></li>
+            <li><a href="#">
+              <i class="fas fa-database"></i>
+              <span class="nav-item">Report</span>
+            </a></li>
+            <li><a href="#">
+              <i class="fas fa-chart-bar"></i>
+              <span class="nav-item">Attendance</span>
+            </a></li>
+            <li><a href="#">
+              <i class="fas fa-cog"></i>
+              <span class="nav-item">Setting</span>
+            </a></li>
+    
+            <li><a href="#" class="logout">
+              <i class="fas fa-sign-out-alt"></i>
+              <span class="nav-item">Log out</span>
+            </a></li>
+          </ul>
+        </nav>
+       
+        <section class="main">
+          <div class="main-top">
+            <h1>ADD PRODUCTS</h1>
+            <i class="fas fa-user-cog"></i>
+          </div>
+              
+          <section class="product">
+            <div class="product-list">
+              <h1>Add Products</h1>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Product ID</th>
+                    <th>Product name</th>
+                    <th>Unit price (KSH)</th>
+                    <th>Quantity</th>
+                    <th>Description</th>
+                    <th>Product img</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="product-tbody">
+                    <!-- Rows will be added dynamically here -->
+                </tbody>       
+             </table>
+             <button id="add-row-btn">+</button> 
+             <button id="submit-btn">Add Inventory</button>     
+            </div>    
+         </section>
+      </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const productTbody = document.getElementById('product-tbody');
+          const addRowBtn = document.getElementById('add-row-btn');
+          
+          addRowBtn.addEventListener('click', () => {
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+              <td><input type="text" name="id" placeholder="Product ID"></td>
+              <td><input type="text" name="productName" placeholder="Product name"></td>
+              <td><input type="number" name="unitPrice" placeholder="Unit price in KSH"></td>
+              <td><input type="number" name="quantity" placeholder="Quantity"></td>
+              <td><input type="text" name="description" placeholder="Description"></td>
+              <td>
+                <input type="file" name="productImg" accept="image/*" onchange="previewImage(event, this)">
+                <img class="img-preview" src="#" alt="Image Preview" style="display: none;">
+              </td>
+              <td><button class="delete-btn">Delete</button></td>
+            `;
+            productTbody.appendChild(newRow);
+            
+            // Add delete functionality to the new button
+            newRow.querySelector('.delete-btn').addEventListener('click', () => {
+              newRow.remove();
+            });
+          });
+    
+          // Add event listener for initial delete buttons
+          document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+              btn.closest('tr').remove();
+            });
+          });
+    
+          // Submit button functionality
+          document.getElementById('submit-btn').addEventListener('click', () => {
+            const rows = productTbody.querySelectorAll('tr');
+            const data = [];
+            rows.forEach(row => {
+              const rowData = {};
+              rowData.id = row.querySelector('input[name="id"]').value;
+              rowData.productName = row.querySelector('input[name="productName"]').value;
+              rowData.unitPrice = row.querySelector('input[name="unitPrice"]').value;
+              rowData.quantity = row.querySelector('input[name="quantity"]').value;
+              rowData.description = row.querySelector('input[name="description"]').value;
+              rowData.productImg = row.querySelector('input[name="productImg"]').value;
+              data.push(rowData);
+            });
+            console.log(data); // You can handle this data as needed (e.g., send it to a server)
+          });
+        });
+      </script>    
+    </body>
+    </html>
+    </span>

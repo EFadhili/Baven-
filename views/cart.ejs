@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Baven | Your Cart</title>
+  <link rel="stylesheet" href="/cart.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <%- include('./partials/header.ejs') %>
+  <main class="grid">
+    <div class="product-list">
+      <h2>Your Cart</h2>
+      <form id="product-form" action="/cart/update" method="POST">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Product img</th>
+              <th>Product name</th>
+              <th>Unit price (KSH)</th>
+              <th>Quantity</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="product-tbody">
+            <% cartItems.forEach(item => { %>
+              <tr>
+                <td><img src="/uploads/<%= item.productImg %>" alt="<%= item.productName %>"></td>
+                <td><%= item.productName %></td>
+                <td><%= item.unitPrice %></td>
+                <td>
+                  <input type="hidden" name="productIds[]" value="<%= item.productID %>">
+                  <input type="number" name="quantities[]" value="<%= item.quantity %>" min="1" required>
+                </td>
+                <td>
+                  <form action="/cart/remove" method="POST" style="display:inline;">
+                    <input type="hidden" name="productID" value="<%= item.productID %>">
+                    <button type="submit"><i class="fas fa-trash-alt"></i></button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <button type="submit">Update</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3>Cart Summary</h3>
+      <p>Your Cart total is: KSH <%= total %></p>
+      <a href="/checkout"><button type="button" id="submit-btn">Proceed to Checkout</button></a>
+    </div>
+  </main>
+</body>
+</html>

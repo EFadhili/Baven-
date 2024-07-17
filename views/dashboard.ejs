@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Baven | <%= title %></title>
+  <link rel="stylesheet" href="/dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <%- include('./partials/nav.ejs') %> 
+    <section class="main">
+      <div class="main-top">
+        <h1>ADD PRODUCTS</h1>
+        <i class="fas fa-user-cog"></i>
+      </div>
+      <section class="product">
+        <div class="product-list">
+          <h1>Add Products</h1>
+          <form id="product-form" enctype="multipart/form-data">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product ID</th>
+                  <th>Product name</th>
+                  <th>Category</th>
+                  <th>Unit price (KSH)</th>
+                  <th>Quantity</th>
+                  <th>Description</th>
+                  <th>Product img</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="product-tbody">
+                  <!-- Rows will be added dynamically here -->
+              </tbody>       
+           </table>
+           <button type="button" id="add-row-btn">+</button>
+           <button type="submit" id="submit-btn">Add Inventory</button>
+          </form>
+        </div>    
+      </section>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const productTbody = document.getElementById('product-tbody');
+        const addRowBtn = document.getElementById('add-row-btn');
+
+        addRowBtn.addEventListener('click', () => {
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = `
+            <td><input type="text" name="id" placeholder="Product ID"></td>
+            <td><input type="text" name="productName" placeholder="Product name"></td>
+            <td><input type="text" name="category" placeholder="category"></td>
+            <td><input type="number" name="unitPrice" placeholder="Unit price in KSH"></td>
+            <td><input type="number" name="quantity" placeholder="Quantity"></td>
+            <td><input type="text" name="description" placeholder="Description"></td>
+            <td>
+              <input type="file" name="productImg" accept="image/*" onchange="previewImage(event, this)">
+              <img class="img-preview" src="#" alt="Image Preview" style="display: none;">
+            </td>
+            <td><button type="button" class="delete-btn">Delete</button></td>
+          `;
+          productTbody.appendChild(newRow);
+
+          newRow.querySelector('.delete-btn').addEventListener('click', () => {
+            newRow.remove();
+          });
+        });
+
+        document.getElementById('product-form').addEventListener('submit', (event) => {
+          event.preventDefault();
+          const form = document.getElementById('product-form');
+          const formData = new FormData(form);
+
+          const products = [];
+          const rows = productTbody.querySelectorAll('tr');
+          rows.forEach(row => {
+            const product = {};
+            product.id = row.querySelector('input[name="id"]').value;
+            product.productName = row.querySelector('input[name="productName"]').value;
+            product.category = row.querySelector('input[name="category"]').value;
+            product.unitPrice = row.querySelector('input[name="unitPrice"]').value;
+            product.quantity = row.querySelector('input[name="quantity"]').value;
+            product.description = row.querySelector('input[name="description"]').value;
+            products.push(product);
+          });
+
+          formData.append('products', JSON.stringify(products));
+
+          fetch('/api/products/add', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.message) {
+              alert(data.message);
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while adding products.');
+          });
+        });
+      });
+
+      function previewImage(event, input) {
+        const reader = new FileReader();
+        reader.onload = function() {
+          const imgPreview = input.nextElementSibling;
+          imgPreview.src = reader.result;
+          imgPreview.style.display = 'block';
+        }
+        reader.readAsDataURL(event.target.files[0]);
+      }
+    </script>
+  </body>
+</html>

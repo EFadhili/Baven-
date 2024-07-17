@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Baven | <%= title %></title>
+  <link rel="stylesheet" href="/dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <%- include('./partials/nav.ejs') %> 
+    <section class="main">
+      <div class="main-top">
+        <h1>Inventory</h1>
+        <i class="fas fa-user-cog"></i>
+      </div>
+      <section class="product">
+        <div class="product-list">
+          <h1>Our Products</h1>
+          <form id="product-form" enctype="multipart/form-data">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product ID</th>
+                  <th>Product name</th>
+                  <th>Unit price (KSH)</th>
+                  <th>Quantity</th>
+                  <th>Description</th>
+                  <th>Product img</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="product-tbody">  
+                <% products.forEach(product => {%>
+                    <tr>
+                        <td><%= product.productID %></td>
+                        <td><%= product.productName %></td>
+                        <td><%= product.unitPrice %></td>
+                        <td><%= product.quantity %></td>
+                        <td><%= product.description %></td>
+                        <td><img src="/uploads/<%= product.productImg %>"></td>
+                        <td>
+                          <form action="/inventory/<%= product.productID %>" method="GET" style="display:inline;">
+                            <button type="submit">Edit</button>
+                          </form>
+                        </td>
+                    </tr>
+                <% }) %>                
+              </tbody>       
+           </table>
+          </form>
+        </div>    
+      </section>
+    </div>
+  </body>
+</html>

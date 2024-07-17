@@ -1,0 +1,144 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Braven | Home</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
+<body>
+    <header class="grid">
+        <h1>Braven</h1>
+        <nav class="left">
+            <a href="/">Home</a>
+            <a href="/">Shop</a>
+            <a href="/">About</a>
+            <a href="/">Contact</a>            
+        </nav>
+        <nav class="right">
+            <a href="/"><img src="search.png" alt="search"></a>
+            <a href="/"><img src="cart.png" alt="cart"></a>
+            <div class="profile-dropdown">
+                <a href="#" id="profile-button"><img src="customer.png" alt="customer"></a>
+                <div class="dropdown-content" id="profile-dropdown">
+                    <a href="/profile"><i class="fas fa-user"></i><span class="dropdown-item">Profile</span></a>
+                    <a href="/cart"><i class="fas fa-shopping-cart"></i><span class="dropdown-item">Cart</span></a>
+                    <a href="/continue-browsing"><i class="fas fa-arrow-right"></i><span class="dropdown-item">Continue Browsing</span></a>
+                    <a href="/favorite"><i class="fas fa-heart"></i><span class="dropdown-item">Favorite</span></a>
+                  <a href="/"><i class="fas fa-sign-out-alt"></i><span class="dropdown-item">Log Out</span></a>
+                </div>
+        </nav>
+    </header>  
+    <main class="grid">
+        <img src="bookshelf.jpg" alt="">
+        <div class="welcome">
+            <h2>Welcome</h2>
+            <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi nam perferendis, eaque aut iste nobis expedita accusantium! Ab, molestias magni!
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, ipsum!
+            </p>
+            <a href="/"><button type="shop-now">Shop now</button></a>
+        </div>
+
+        <h2>Categories</h2>
+        <div class="categories">
+            <img src="stationery.jpg" alt="stationery">
+            <div class="categories-name">Stationeries</div>
+        </div>
+        <div class="categories">
+            <img src="books.jpg" alt="books">
+            <div class="categories-name">Books</div>
+        </div>
+        <div class="categories">
+            <img src="novels.jpg" alt="novels">
+            <div class="categories-name">Novels</div>
+        </div>
+        <div class="categories">
+            <img src="art-supplies.jpg" alt="art-supplies">
+            <div class="categories-name">Art Supplies</div>
+        </div>
+
+        <h2>Top Products</h2>
+        <div class="products">
+            <img src="karatasi-exercise.jpg" alt="Book 1">
+            <div class="product-details">
+              <div class="products-details">Lorem ipsum dolor.</div>
+              <div class="products-details">KSH 500</div>
+            </div>
+        </div>
+        <div class="products">
+            <img src="karatasi-exercise.jpg" alt="Book 1">
+            <div class="product-details">
+              <div class="products-details">Lorem.</div>
+              <div class="products-details">KSH 500</div>
+            </div>
+        </div>
+        <div class="products">
+            <img src="casio.jpg" alt="Book 1">
+            <div class="product-details">
+              <div class="products-details">Lorem.</div>
+              <div class="products-details">KSH 500</div>
+            </div>
+        </div>
+        <div class="products">
+            <img src="notebook-kasuku.jpg" alt="Book 1">
+            <div class="product-details">
+              <div class="products-details">Notebook Spiral.</div>
+              <div class="products-details">KSH 500</div>
+            </div>
+        </div>
+        <div class="products">
+            <img src="bic-ball.jpg" alt="Book 1">
+            <div class="product-details">
+              <div class="products-details">Lorem.</div>
+              <div class="products-details">KSH 500</div>
+            </div>
+        </div>
+        <div class="products">
+            <img src="bic-sharp.jpg" alt="Book 1">
+            <div class="product-details">
+              <div class="products-details">Lorem.</div>
+              <div class="products-details">KSH 500</div>
+            </div>
+        </div>
+
+        <h2>Services</h2>
+        <div class="card">
+            <h3>Hello</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, autem?</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, autem?</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, autem?</p>
+        </div>
+        <div class="card">
+            <h3>Hello</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, autem?</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, autem?</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, autem?</p>
+        </div>
+        <div class="card">
+            <h3>Hello</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, autem?</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, autem?</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, autem?</p>
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const profileButton = document.getElementById('profile-button');
+          const profileDropdown = document.getElementById('profile-dropdown');
+    
+          profileButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
+          });
+    
+          document.addEventListener('click', (event) => {
+            if (!profileButton.contains(event.target) && !profileDropdown.contains(event.target)) {
+              profileDropdown.style.display = 'none';
+            }
+          });
+        });
+    </script>
+</body>
+</html>

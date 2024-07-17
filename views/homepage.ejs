@@ -1,0 +1,85 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baven | <%= title %></title>
+  <link rel="stylesheet" href="/homepage.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
+<body>
+    <%- include('./partials/header.ejs') %>  
+    <main class="grid">
+        <img src="bookshelf.jpg" alt="">
+        <div class="welcome">
+            <h2>Welcome</h2>
+            <p>
+                Welcome to Baven, your ultimate destination for books, stationery, art supplies, and more! 
+                <p>At Baven, we are dedicated to providing you with a seamless and enjoyable shopping experience.</p>
+            </p>
+            <a href="/shop"><button type="shop-now">Shop now</button></a>
+        </div>
+
+        <h2>Categories</h2>
+        <div class="categories">
+            <a href="/shop/stationery">
+                <img src="stationery.jpg" alt="stationery">    
+            </a>    
+            <div class="categories-name">Stationeries</div>         
+        </div>
+        <div class="categories">
+            <a href="/shop/books">
+                <img src="books.jpg" alt="books"> 
+            </a>            
+            <div class="categories-name">Books</div>
+        </div>
+        <div class="categories">
+            <a href="/shop/novel">
+                <img src="novels.jpg" alt="novels">
+            </a>
+            <div class="categories-name">Novels</div>
+        </div>
+        <div class="categories">
+            <a href="/shop/art-supplies">
+                <img src="art-supplies.jpg" alt="art-supplies">
+            </a>
+            <div class="categories-name">Art Supplies</div>
+        </div>
+        
+
+        <h2>Top Products</h2>
+        <% products.forEach(product => { %>
+          <div class="products">
+            <a href="/product/<%= product.id %>">
+                <img src="/uploads/<%= product.productImg %>" alt="<%= product.productName %>">
+            </a>
+            <div class="product-details">
+              <div class="products-details"><%= product.productName %></div>
+              <div class="products-details">KSH <%= product.unitPrice %></div>
+            </div>
+          </div>
+        <% }) %>
+
+        <h2>Services</h2>
+        <div class="card">
+            <h3>Book Sales</h3>
+            <p>Explore our extensive collection of books across various genres, including fiction, non-fiction, academic, and more.</p>
+            <p>We offer personalized book recommendations to help you find your next great read.</p>
+            <p>Enjoy exclusive discounts and offers on bestsellers and new arrivals.</p>
+        </div>
+        <div class="card">
+            <h3>Stationery Supplies</h3>
+            <p>Browse our wide range of stationery products, including notebooks, pens, pencils, and planners.</p>
+            <p>We provide high-quality stationery items for students, professionals, and hobbyists.</p>
+            <p>Check out our unique and creative stationery collections that add a touch of style to your work or study space.</p>
+        </div>
+        <div class="card">
+            <h3>Art Supplies</h3>
+            <p>Discover our selection of art supplies, including paints, brushes, canvases, and sketchbooks.</p>
+            <p>We cater to artists of all levels, from beginners to professionals, with top-notch art materials.</p>
+            <p>Join our art workshops and classes to enhance your skills and connect with fellow art enthusiasts.</p>
+        </div>
+    </main>
+    <%- include('./partials/footer.ejs') %>  
+</body>
+</html>
